@@ -9,11 +9,11 @@ class RemoveInvalidCspScriptSrcSiteSettingValues < ActiveRecord::Migration[7.0]
 
     if csp_script_src_setting_value.present?
       regex =
-        /
+        %r{
         (?:^'unsafe-eval'$)|
         (?:^'wasm-unsafe-eval'$)|
-        (?:^'sha(?:256|384|512)-[A-Za-z0-9+\/=]{44,88}'$)
-      /x
+        (?:^'sha(?:256|384|512)-[A-Za-z0-9+/=]+'$)
+      }x
       updated_value =
         csp_script_src_setting_value
           .split("|")
